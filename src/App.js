@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 const App = () => {
   const canvasRef = useRef(null);
   const [drawing, setDrawing] = useState(false);
+  const [length, setLength] = useState(0);
   const [showSubmit, setShowSubmit] = useState(false);
   const [lastX, setLastX] = useState(0);
   const [lastY, setLastY] = useState(0);
@@ -35,7 +36,10 @@ const App = () => {
         const lineLength = Math.sqrt(
           Math.pow(x - lastX, 2) + Math.pow(y - lastY, 2)
         );
-        if (lineLength >= 300) {
+        console.log(lineLength);
+        const new_length = length + lineLength;
+        setLength(new_length);
+        if (new_length >= 300) {
           setShowSubmit(true);
         }
 
@@ -65,7 +69,7 @@ const App = () => {
       canvas.removeEventListener("touchmove", draw);
       canvas.removeEventListener("touchend", endDrawing);
     };
-  }, [drawing, lastX, lastY]);
+  }, [drawing, lastX, lastY, length]);
 
   const handleSubmit = () => {
     // Handle submission logic here
